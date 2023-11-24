@@ -9,12 +9,12 @@
  */
 void factorizeNumber(FILE *file)
 {
-    long number;
+    long number, factor;
 
     while (fscanf(file, "%ld", &number) == 1)
     {
         /* Find factors of the number */
-        for (long factor = 2; factor <= number / 2; ++factor)
+        for (factor = 2; factor <= number / 2; ++factor)
         {
             if (number % factor == 0)
             {
