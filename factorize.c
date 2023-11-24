@@ -8,12 +8,14 @@
  */
 int isPrime(long long num)
 {
+    long long i;
+    
     if (num < 2)
     {
         return 0;  /* Not prime */
     }
 
-    for (long long i = 2; i * i <= num; ++i)
+    for (i = 2; i * i <= num; ++i)
     {
         if (num % i == 0)
         {
