@@ -11,15 +11,13 @@ void factorizeNumber(FILE *file)
 {
     long long number, factor;
 
-    while (fscanf(file, "%lld", &number) == 1)
-    {
+    while (fscanf(file, "%lld", &number) == 1) {
         /* Find factors of the number */
-        for (factor = 2; factor <= number / 2; ++factor)
-        {
-            if (number % factor == 0)
-            {
-                /* Print the factorization */
-                printf("%lld=%lld*%lld\n", number, factor, number / factor);
+        for (long long factor = 2; factor <= number / 2; ++factor) {
+            if (number % factor == 0) {
+                /* Print the factorization with the smaller factor first */
+                printf("%lld=%lld*%lld\n", number, factor < (number / factor) ? factor : (number / factor),
+                       factor < (number / factor) ? (number / factor) : factor);
                 break;
             }
         }
