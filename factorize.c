@@ -11,7 +11,7 @@ void factorizeNumber(FILE *file)
 {
     long long number, factor;
 
-    while (fscanf(file, "%ld", &number) == 1)
+    while (fscanf(file, "%lld", &number) == 1)
     {
         /* Find factors of the number */
         for (factor = 2; factor <= number / 2; ++factor)
@@ -19,7 +19,7 @@ void factorizeNumber(FILE *file)
             if (number % factor == 0)
             {
                 /* Print the factorization */
-                printf("%ld=%ld*%ld\n", number, factor, number / factor);
+                printf("%lld=%lld*%lld\n", number, factor, number / factor);
                 break;
             }
         }
