@@ -16,8 +16,8 @@ void factorizeNumber(FILE *file)
         for (factor = 2; factor <= number / 2; ++factor) {
             if (number % factor == 0) {
                 /* Print the factorization with the smaller factor first */
-                printf("%lld=%lld*%lld\n", number, factor < (number / factor) ? factor : (number / factor),
-                       factor < (number / factor) ? (number / factor) : factor);
+                printf("%lld=%lld*%lld\n", number, (factor < number / factor) ? factor : number / factor,
+                (factor < number / factor) ? number / factor : factor);
                 break;
             }
         }
