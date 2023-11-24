@@ -1,3 +1,6 @@
+import math
+import time
+
 def is_prime(num):
     """
     Check if a number is prime.
@@ -10,7 +13,7 @@ def is_prime(num):
     """
     if num < 2:
         return False
-    for i in range(2, int(num**0.5) + 1):
+    for i in range(2, math.isqrt(num) + 1):
         if num % i == 0:
             return False
     return True
@@ -25,7 +28,7 @@ def factorize_number(number):
     Returns:
     - tuple: A tuple containing two factors of the given number.
     """
-    for factor in range(2, int(number**0.5) + 1):
+    for factor in range(2, math.isqrt(number) + 1):
         if number % factor == 0 and is_prime(factor):
             return factor, number // factor
     return number, 1
@@ -44,8 +47,7 @@ def main(filename):
             print(f"{number}={'*'.join(map(str, result))}")
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) != 2:
-        print(f"Usage: {sys.argv[0]} <filename>")
-        sys.exit(1)
-    main(sys.argv[1])
+    start_time = time.time()
+    main("tests/test00")
+    end_time = time.time()
+    print(f"\nreal\t{end_time - start_time:.3f}s")
