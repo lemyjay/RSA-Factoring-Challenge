@@ -28,7 +28,7 @@ def factorize_number(number):
     Returns:
         tuple: A tuple containing two factors.
     """
-    for factor in range(math.isqrt(number) + 1, 1, -1):
+    for factor in range(2, math.isqrt(number) + 1):
         if number % factor == 0 and is_prime(factor):
             return number // factor, factor
     return number, 1
