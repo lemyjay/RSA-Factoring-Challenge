@@ -9,7 +9,7 @@
  */
 void factorizeNumber(FILE *file)
 {
-    long number, factor;
+    long long number, factor;
 
     while (fscanf(file, "%ld", &number) == 1)
     {
