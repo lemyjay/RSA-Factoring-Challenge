@@ -14,32 +14,41 @@ def factorize_number(number):
         print(f"{number}={number}")
         return
 
-    print(f"{number}=", end='')
+    print(f"{number}=", end="")
 
     while number > 1:
-        factor_found = False
+        factor = pollards_rho(number)
+        print(factor, end="")
+        number //= factor
+        if number > 1:
+            print("*", end="")
 
-        # Check if the number itself is prime
-        if is_prime(number):
-            print(f"{number}")
-            break
+    print()
 
-        # Find the smallest prime factor using Pollard's rho algorithm
-        for factor in range(2, number + 1):
-            if number % factor == 0 and is_prime(factor):
-                print(f"{factor}", end='')
-                number //= factor
-                factor_found = True
-                if number > 1:
-                    print("*", end='')
-                break
+def pollards_rho(n):
+    if n % 2 == 0:
+        return 2
 
-        # If no factor is found, it means the number is prime
-        if not factor_found:
-            print(f"{number}")
-            break
+    x = randrange(2, n - 1)
+    y = x
+    d = 1
 
-def main(filename):
+    def f(x):
+        return (x * x + 1) % n
+
+    while d == 1:
+        x = f(x)
+        y = f(f(y))
+        d = math.gcd(abs(x - y), n)
+
+    return d
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <filename>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
     try:
         with open(filename, 'r') as file:
             for line in file:
@@ -49,11 +58,3 @@ def main(filename):
         print(f"Error: File '{filename}' not found.")
     except Exception as e:
         print(f"Error: {e}")
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <filename>")
-        sys.exit(1)
-
-    filename = sys.argv[1]
-    main(filename)
