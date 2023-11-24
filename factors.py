@@ -1,30 +1,34 @@
+def is_prime(num):
+    """
+    Check if a number is prime.
+
+    Parameters:
+    - num (int): The number to check for primality.
+
+    Returns:
+    - bool: True if the number is prime, False otherwise.
+    """
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
 def factorize_number(number):
     """
-    Factorize a given number into a list of two factors.
+    Factorize a given number into a product of two smaller numbers.
 
     Parameters:
     - number (int): The number to be factorized.
 
     Returns:
-    - list: A list containing two factors of the given number.
+    - tuple: A tuple containing two factors of the given number.
     """
-    factors = []
-
-    # Check for divisibility by 2
-    while number % 2 == 0:
-        factors.extend([2, number // 2])
-        return factors
-
-    # Check odd numbers starting from 3
-    for i in range(3, int(number**0.5) + 1, 2):
-        while number % i == 0:
-            factors.extend([i, number // i])
-            return factors
-
-    # If the number is prime
-    if number > 1:
-        factors.extend([number, 1])
-    return factors
+    for factor in range(2, int(number**0.5) + 1):
+        if number % factor == 0 and is_prime(factor):
+            return factor, number // factor
+    return number, 1
 
 def main(filename):
     """
