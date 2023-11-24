@@ -11,6 +11,7 @@
 int main(int argc, char *argv[])
 {
     FILE *file;
+    long long number;
 
     if (argc != 2)
     {
@@ -25,7 +26,9 @@ int main(int argc, char *argv[])
         return (EXIT_FAILURE);
     }
 
-    factorizeNumber(file);
+
+    while (fscanf(file, "%lld", &number) == 1)
+        factorize_number(number);    
 
     fclose(file);
 

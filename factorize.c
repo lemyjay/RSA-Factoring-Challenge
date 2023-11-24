@@ -1,56 +1,76 @@
 #include "rsa.h"
 
 /**
- * isPrime - Checks if a number is prime.
- * @num: The number to be checked.
+ * gcd - Calculate the greatest common divisor (GCD) of two numbers.
  *
- * Return: 1 if prime, 0 otherwise.
+ * @a: The first number.
+ * @b: The second number.
+ * 
+ * Return: The GCD of a and b.
  */
-int isPrime(long long num)
+long long gcd(long long a, long long b)
 {
-    long long i;
-    
-    if (num < 2)
+    while (b != 0)
     {
-        return 0;  /* Not prime */
+        long long temp = b;
+        b = a % b;
+        a = temp;
     }
 
-    for (i = 2; i * i <= num; ++i)
-    {
-        if (num % i == 0)
-        {
-            return 0;  /* Not prime */
-        }
-    }
-
-    return 1;  /* Prime */
+    return (a);
 }
 
+/**
+ * pollards_rho - Apply Pollard's Rho algorithm to find a non-trivial factor of a number.
+ *
+ * @n: The number to factorize.
+ * 
+ * Return: A non-trivial factor of n.
+ */
+long long pollards_rho(long long n)
+{
+    long long x = rand() % (n - 2) + 2;
+    long long y = x;
+    long long d = 1;
+
+    if (n % 2 == 0)
+        return (2);
+
+    long long f(long long x)
+        return ((x * x + 1) % n);
+
+    while (d == 1)
+    {
+        x = f(x);
+        y = f(f(y));
+        d = gcd(abs(x - y), n);
+    }
+
+    return (d);
+}
 
 /**
- * factorizeNumber - Factorizes numbers from the file
- *                      This function reads numbers from the specified
- *                   file, performs factorization and prints the results.
- * 
- * @file: pointer to the file containing numbers to factorize 
+ * factorize_number - Factorize a given number into its prime factors.
+ *
+ * @number: The number to factorize.
  */
-void factorizeNumber(FILE *file)
-{
-    long long number, factor;
-
-    while (fscanf(file, "%lld", &number) == 1) {
-        /* Handle even numbers */
-        if (number % 2 == 0) {
-            printf("%lld=2*%lld\n", number, number / 2);
-            continue;
-        }
-
-        /* Find factors of the number */
-        for (factor = 3; factor * factor <= number; factor += 2) {
-            if (number % factor == 0 && isPrime(factor)) {
-                printf("%lld=%lld*%lld\n", number, factor, number / factor);
-                break;
-            }
-        }
+void factorize_number(long long number) {
+    if (number <= 1) {
+        printf("%lld=%lld\n", number, number);
+        return;
     }
+
+    printf("%lld=", number);
+
+    while (number > 1)
+    {
+        long long factor = pollards_rho(number);
+
+        printf("%lld", factor);
+        number /= factor;
+        if (number > 1)
+            printf("*");
+    }
+
+    printf("\n");
 }

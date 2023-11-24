@@ -6,5 +6,8 @@
 #include <stdio.h>
 
 /*Prototypes that would be used for this program*/
-void factorizeNumber(FILE *file);
+long long gcd(long long a, long long b);
+long long pollards_rho(long long n);
+void factorize_number(long long number);
+
 #endif /*RSA_H*/
