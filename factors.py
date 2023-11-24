@@ -1,51 +1,48 @@
 import sys
 import math
 
-def is_prime(num):
-    """
-    Check if a given number is prime.
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
 
-    Args:
-        num (int): The number to check.
+def pollards_rho(n):
+    if n % 2 == 0:
+        return 2
 
-    Returns:
-        bool: True if the number is prime, False otherwise.
-    """
-    if num < 2:
-        return False
-    for i in range(2, math.isqrt(num) + 1):
-        if num % i == 0:
-            return False
-    return True
+    x = 2
+    y = 2
+    d = 1
+
+    f = lambda x: (x**2 + 1) % n
+
+    while d == 1:
+        x = f(x)
+        y = f(f(y))
+        d = gcd(abs(x - y), n)
+
+    return d
 
 def factorize_number(number):
-    """
-    Factorize a given number into two smaller numbers.
+    if number <= 1:
+        return [number]
 
-    Args:
-        number (int): The number to factorize.
+    factors = []
+    while number > 1:
+        factor = pollards_rho(number)
+        factors.append(factor)
+        number //= factor
 
-    Returns:
-        tuple: A tuple containing two factors.
-    """
-    for factor in range(2, math.isqrt(number) + 1):
-        if number % factor == 0 and is_prime(factor):
-            return number // factor, factor
-    return number, 1
+    return factors
 
 def main(filename):
-    """
-    Main function to read numbers from a file and factorize them.
-
-    Args:
-        filename (str): The name of the file containing numbers to factorize.
-    """
     try:
         with open(filename, 'r') as file:
             for line in file:
                 number = int(line)
-                result = factorize_number(number)
-                print(f"{number}={'*'.join(map(str, result))}")
+                factors = factorize_number(number)
+                factors_str = '*'.join(map(str, factors))
+                print(f"{number}={factors_str}")
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found.")
     except Exception as e:
