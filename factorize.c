@@ -45,7 +45,7 @@ long long pollards_rho(long long n)
     {
         x = f(x);
         y = f(f(y));
-        d = gcd(abs(x - y), n);
+        d = gcd(labs(x - y), n);
     }
 
     return (d);
