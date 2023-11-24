@@ -1,15 +1,15 @@
+import sys
 import math
-import time
 
 def is_prime(num):
     """
-    Check if a number is prime.
+    Check if a given number is prime.
 
-    Parameters:
-    - num (int): The number to check for primality.
+    Args:
+        num (int): The number to check.
 
     Returns:
-    - bool: True if the number is prime, False otherwise.
+        bool: True if the number is prime, False otherwise.
     """
     if num < 2:
         return False
@@ -20,34 +20,41 @@ def is_prime(num):
 
 def factorize_number(number):
     """
-    Factorize a given number into a product of two smaller numbers.
+    Factorize a given number into two smaller numbers.
 
-    Parameters:
-    - number (int): The number to be factorized.
+    Args:
+        number (int): The number to factorize.
 
     Returns:
-    - tuple: A tuple containing two factors of the given number.
+        tuple: A tuple containing two factors.
     """
-    for factor in range(2, math.isqrt(number) + 1):
+    for factor in range(math.isqrt(number) + 1, 1, -1):
         if number % factor == 0 and is_prime(factor):
-            return factor, number // factor
+            return number // factor, factor
     return number, 1
 
 def main(filename):
     """
-    Main function to read numbers from a file, factorize them, and print the results.
+    Main function to read numbers from a file and factorize them.
 
-    Parameters:
-    - filename (str): The name of the file containing natural numbers to factorize.
+    Args:
+        filename (str): The name of the file containing numbers to factorize.
     """
-    with open(filename, 'r') as file:
-        for line in file:
-            number = int(line)
-            result = factorize_number(number)
-            print(f"{number}={'*'.join(map(str, result))}")
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                number = int(line)
+                result = factorize_number(number)
+                print(f"{number}={'*'.join(map(str, result))}")
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
-    start_time = time.time()
-    main("tests/test00")
-    end_time = time.time()
-    print(f"\nreal\t{end_time - start_time:.3f}s")
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <filename>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    main(filename)
