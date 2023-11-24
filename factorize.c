@@ -37,7 +37,9 @@ long long pollards_rho(long long n)
         return (2);
 
     long long f(long long x)
+    {
         return ((x * x + 1) % n);
+    }
 
     while (d == 1)
     {
